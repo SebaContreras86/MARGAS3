@@ -1,0 +1,51 @@
+@charset "ISO-8859-1";
+
+form {
+	margin-bottom: 5px;
+}
+
+fieldset {
+	font-family: monospace;
+	font-size: 15px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+legend {
+	font-size: 25px;
+}
+
+select{
+	display: inline-block;
+	width: 20%;
+	padding: 5px;
+	margin-bottom: 5px;
+	font-size: 15px;
+}
+
+textarea {
+	width: 50%;
+	height: 250px;
+	resize: none;
+}
+
+.boton-enviar {
+	width: 20%;
+	margin-top: 10px;
+	background-color: #2f3640;
+	color: #f5f6fa;
+}
+
+.dir-manual {
+	width: 20%;
+	margin-bottom: 5px;
+}
+
+.mensaje {
+	font-size: 30px;
+	font-family: sans-serif;
+	background-color: #2f3640;
+	color: #f5f6fa;
+	border-radius: 10px;
+}

@@ -1,0 +1,36 @@
+form {
+	height: 100%;
+}
+
+fieldset {
+	width: 600px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 25px;
+	border-color: #f5f6fa;
+	border-radius: 15px;
+}
+
+legend {
+	font-size: 35px;
+}
+
+input, select, option{
+	width: 50%;
+	font-size: 22px;
+	margin-bottom: 10px;
+	padding: 5px;
+	text-align: center;
+	background-color: #dcdde1;
+	border-radius: 10px;
+	border-color: #718093;
+}
+
+input[type="submit"] {
+	background-color: #2f3640;
+	color: #f5f6fa;
+	border-radius: 0;
+	border-color: #f5f6fa;
+}
