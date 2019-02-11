@@ -19,14 +19,17 @@
 			<li><a href="/MARGAS3/ADMIN/CrearCuenta.jsp"> Registrar usuario</a></li>
 			<li><a href="/MARGAS3/ADMIN/BuscarUsuario.jsp"> Modificar usuario </a></li>
 			<li><a href="/MARGAS3/PedidosPendientesSL"> Pedidos pendientes </a></li>
-			<li><a href="#">Ranking de garrafas</a></li>
+			<li><a href="/MARGAS3/ADMIN/ReporteIngresos.jsp"> Reporte ingresos </a></li>
+			<li> <a href="/MARGAS3/CompraSL"> Compras </a> </li>
 			<li><a href="/MARGAS3/ContactarProveedorSL"> Contactar proveedor </a></li>
 			<li><a href="/MARGAS3/Logout"> Cerrar sesión </a></li>
 		</ul>
 	</nav>
 
 	<main class="inicio-main">
+
 		<img src="/MARGAS3/llama-azul.jpg" height="100%">
+		
 	</main>
 
 	<footer>

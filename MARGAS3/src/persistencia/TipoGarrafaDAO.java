@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +15,7 @@ public class TipoGarrafaDAO {
 	public static ArrayList<TipoGarrafa> GetAll() {
 		ArrayList<TipoGarrafa> lista_tipos_garrafa = new ArrayList<TipoGarrafa>();
 
-		ArrayList<HashMap<String, Object>> results = DataBase.CallStoredProcedure("{call SelectAllTipoGarrafa()}");
+		ArrayList<HashMap<String, Object>> results = DataBase.CallStoredProcedure("call SelectAllTipoGarrafa()");
 		
 		TipoGarrafa tipoGarrafa = null;
 		for (HashMap<String, Object> row : results) {
@@ -22,12 +24,12 @@ public class TipoGarrafaDAO {
 			Object id = row.get("id");
 			Object descripcion = row.get("descripcion");
 			Object precio = row.get("precio");
-			Object stock = row.get("stock");
+			BigDecimal stock = (BigDecimal) row.get("stock");
 			
 			tipoGarrafa.setId((int) id);
 			tipoGarrafa.setDescripcion((String) descripcion);
 			tipoGarrafa.setPrecio((double) precio);
-			tipoGarrafa.setStock((int) stock);
+			tipoGarrafa.setStock(stock.intValue());
 			
 			lista_tipos_garrafa.add(tipoGarrafa);
 		}
@@ -53,7 +55,8 @@ public class TipoGarrafaDAO {
 			tipoGarrafa.setId((int) results.get(0).get("id"));
 			tipoGarrafa.setDescripcion((String) results.get(0).get("descripcion"));
 			tipoGarrafa.setPrecio((double) results.get(0).get("precio"));
-			tipoGarrafa.setStock((int) results.get(0).get("stock"));
+			BigDecimal stock = (BigDecimal) results.get(0).get("stock");
+			tipoGarrafa.setStock(stock.intValue());
 		}
 		
 		return tipoGarrafa;

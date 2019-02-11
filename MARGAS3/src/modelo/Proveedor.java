@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Proveedor {
 	private String email;
 	private String cuit;
@@ -7,8 +9,12 @@ public class Proveedor {
 	private String nombre;
 	private String apellido;
 	private String telefono;
+	ArrayList<TipoGarrafa> garrafas;
+	private ArrayList<TipoGarrafa> productos;
 	
-	public Proveedor() {}
+	public Proveedor() {
+		this.productos = new ArrayList<TipoGarrafa>();
+	}
 
 	/**
 	 * @return the email
@@ -92,6 +98,14 @@ public class Proveedor {
 	 */
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	};
+	}
+	
+	public ArrayList<TipoGarrafa> getProductos() {
+		return this.productos;
+	}
+	
+	public void setProductos(ArrayList<TipoGarrafa> productos) {
+		this.productos = productos;
+	}
 	
 }

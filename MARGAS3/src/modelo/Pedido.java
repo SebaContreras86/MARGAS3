@@ -12,6 +12,7 @@ public class Pedido {
 	private String estado;
 	private String direccion;
 	private ArrayList<LineaDePedido> lineas;
+	private ArrayList<LineaDeVenta> lineasDeVenta;
 	
 	public Pedido(String dni) {
 		this.dni = dni;
@@ -99,5 +100,24 @@ public class Pedido {
 				break;
 			}
 		}
+	}
+
+	public void takeProductsFrom(ArrayList<Compra> compras) {
+		this.lineasDeVenta = new ArrayList<LineaDeVenta>();
+		for (LineaDePedido ldp : lineas) {
+			int restantes = ldp.getCantidad();
+			for (Compra compra : compras) {
+				LineaDeVenta ldv = compra.getLineaDeVenta(ldp.getTipoGarrafa(), restantes);
+				if (ldv != null) {
+					restantes -= ldv.getCantidad();
+					this.lineasDeVenta.add(ldv);
+					if (restantes == 0) break;
+				}
+			}
+		}
+	}
+
+	public ArrayList<LineaDeVenta> getLineasDeVenta() {
+		return this.lineasDeVenta;
 	}
 }

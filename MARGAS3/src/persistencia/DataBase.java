@@ -45,13 +45,13 @@ public class DataBase {
 		
 		ResultSetMetaData md = Rs.getMetaData();
 		int columns = md.getColumnCount();
-
+		
 	    while (Rs.next()) {
 	        HashMap<String, Object> row = new HashMap<String, Object>();
 	        results.add(row);
 
 	        for(int i=1; i<=columns; i++){
-	          row.put(md.getColumnName(i), Rs.getObject(i));
+	          row.put(md.getColumnLabel(i), Rs.getObject(i));
 	        }
 	    }
 		return results;
@@ -63,20 +63,22 @@ public class DataBase {
 			System.out.println("Param. index: " + index);
 			String paramType = object.getClass().getSimpleName();
 			System.out.println("Param. type: " + paramType);
-			System.out.println("Param. value: " + object);
+			System.out.println("Param. value: " + object + "\n");
 			switch (paramType) {
-			case "Integer":	Cs.setInt(index++, (int) object);
-				break;
-			case "Float": 	Cs.setFloat(index++, (float) object);
-				break;
-			case "Double":	Cs.setDouble(index++, (double) object);
-				break;
-			case "String":	Cs.setString(index++, (String) object);
-				break;	
-			case "Date":	Cs.setDate(index++, (Date) object);
-				break;
-			default:
-				break;
+				case "Integer":	Cs.setInt(index++, (int) object);
+					break;
+				case "Float": 	Cs.setFloat(index++, (float) object);
+					break;
+				case "Double":	Cs.setDouble(index++, (double) object);
+					break;
+				case "Long":	Cs.setLong(index++, (long) object);
+					break;
+				case "String":	Cs.setString(index++, (String) object);
+					break;	
+				case "Date":	Cs.setDate(index++, (Date) object);
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -128,15 +130,11 @@ public class DataBase {
 	
 	public static void Close() throws DataBaseException {
 		try {
-			if (Conexion != null) {
-				Conexion.close();
-			}
-			if (Cs != null) {
-				Cs.close();
-			}
-			if (Rs != null) {
-				Rs.close();
-			}
+			if (Conexion != null) Conexion.close();
+			
+			if (Cs != null) Cs.close();
+			
+			if (Rs != null) Rs.close();
 		}
 		catch(SQLException e) {
 			throw new DataBaseException("Error al liberar recursos", e);

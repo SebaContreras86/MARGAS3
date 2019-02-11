@@ -2,9 +2,11 @@ package controladores;
 
 import java.util.ArrayList;
 
+import modelo.Compra;
 import modelo.LineaDePedido;
 import modelo.Pedido;
 import modelo.TipoGarrafa;
+import persistencia.CompraDAO;
 import persistencia.PedidoDAO;
 import persistencia.TipoGarrafaDAO;
 
@@ -70,24 +72,20 @@ public class ControladorPedido {
 	 * @see TipoGarrafaDAO 
 	 * @return false si el pedido estaba vacío, true en otro caso.
 	 */
-	public boolean enviar() {
+	public boolean enviar() { 
 		
-		ArrayList<LineaDePedido> lineas = pedido.getLineas(); 
-		
-		if (!lineas.isEmpty()) {
-			PedidoDAO.Save(this.pedido);
+		if (!pedido.getLineas().isEmpty()) {
+			ArrayList<Compra> compras = CompraDAO.GetByEstado("activo"); 
 			
-			TipoGarrafa tipoGarrafa = null;
-			int cantidad = 0;
-			for (LineaDePedido lineaDePedido : lineas) {
-				tipoGarrafa = lineaDePedido.getTipoGarrafa();
-				cantidad = lineaDePedido.getCantidad();
-				tipoGarrafa.actualizarStock(-cantidad);
-				
-				TipoGarrafaDAO.UpdateStock(tipoGarrafa);
+			pedido.takeProductsFrom(compras);
+			
+			for (Compra compra : compras) {
+				if (compra.getEstado().equals("agotado")) CompraDAO.Update(compra);
 			}
+			
+			PedidoDAO.Save(this.pedido); //Método incompleto
 		}
 		
-		return !lineas.isEmpty();
+		return !pedido.getLineas().isEmpty();
 	}
 }

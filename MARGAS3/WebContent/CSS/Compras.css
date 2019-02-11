@@ -1,0 +1,96 @@
+main {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	font-family: sans-serif;
+}
+
+section {
+	padding: 15px;
+}
+
+table {
+	text-align: left;
+	width: 70%;
+}
+
+tr:hover {
+	background-color: #38ada9;
+}
+
+td {
+	width: 30%;
+}
+
+caption {
+	background-color: #079992;
+	padding: 5px;
+	font-family: arial black;
+}
+
+.cantidad {
+	width: 35%;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.stock {
+	background-color: #78e08f;
+}
+
+.compra {
+	background-color: #b8e994;
+}
+
+.btn-listo {
+	margin-top: 10px;
+	display: inline-block;
+	width: 70%;
+	padding: 5px;
+	border-radius: 10px;
+	font-size: 15px;
+	font-family: "Lucida Console";
+	background-color: #0a3d62;
+	color: white;
+}
+
+.btn-agregar {
+	border-radius: 10px;
+	font-family: "Lucida Console";
+	background-color: #0a3d62;
+	color: white;	
+}
+
+.td-stock {
+	width: 50%;
+}
+
+.tbl-stock {
+	width: 100%;
+	font-size: 20px;
+}
+
+fieldset {
+	margin-bottom: 10px;
+	width: 20%;
+	font-size: 15px;
+	font-family: "Lucida Console";
+	border-width: 0;
+}
+
+legend {
+	background-color: #079992;
+	padding: 5px;
+}
+
+select {
+	width: 100%;
+	border-radius: 10px;
+}
+
+input[type="submit"] {
+	cursor: pointer;
+}
+
+hr {
+	margin: 15px;
+}

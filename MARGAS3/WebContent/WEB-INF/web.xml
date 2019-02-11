@@ -187,4 +187,26 @@
     <url-pattern>/RankingGarrafasSL</url-pattern>
     <url-pattern>/rankinggarrafas</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CompraSL</display-name>
+    <servlet-name>CompraSL</servlet-name>
+    <servlet-class>servlets.CompraSL</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompraSL</servlet-name>
+    <url-pattern>/CompraSL</url-pattern>
+    <url-pattern>/compra</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ReporteSL</display-name>
+    <servlet-name>ReporteSL</servlet-name>
+    <servlet-class>servlets.ReporteSL</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReporteSL</servlet-name>
+    <url-pattern>/ReporteSL</url-pattern>
+    <url-pattern>/reporte</url-pattern>
+  </servlet-mapping>
 </web-app>

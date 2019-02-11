@@ -7,9 +7,11 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 import modelo.LineaDePedido;
+import modelo.LineaDeVenta;
 import modelo.Pedido;
 import modelo.TipoGarrafa;
 
@@ -20,7 +22,37 @@ import modelo.TipoGarrafa;
  *
  */
 public class PedidoDAO {
-
+	
+	private static Pedido Construir(List<HashMap<String, Object>> list) {
+		Object nro_pedido = list.get(0).get("nro_pedido");
+		Object direccion = list.get(0).get("direccion");
+		Object fecha = list.get(0).get("fecha");
+		Object dni = list.get(0).get("dni");
+		
+		Pedido pedido = new Pedido((String) dni);
+		pedido.setNro_pedido((int) nro_pedido);
+		pedido.setDireccion((String) direccion);
+		pedido.setFecha((Date) fecha);
+		
+		for (HashMap<String, Object> row : list) {
+			Object id = row.get("id");
+			Object descripcion = row.get("descripcion");
+			Object precio = row.get("precio");
+			
+			TipoGarrafa tipoGarrafa = new TipoGarrafa();
+			tipoGarrafa.setId((int) id);
+			tipoGarrafa.setDescripcion((String) descripcion);
+			tipoGarrafa.setPrecio((double) precio);
+			
+			int cantidad = (int) row.get("cantidad");
+			LineaDePedido ldp = new LineaDePedido(tipoGarrafa, cantidad);
+			
+			pedido.agregarLinea(ldp);
+		}
+		
+		return pedido;
+	}
+	
 	public static void Save(Pedido pedido) {
 		ArrayList<Object> params = new ArrayList<Object>();
 		params.add("pendiente");
@@ -33,6 +65,15 @@ public class PedidoDAO {
 			params.add(lineaDePedido.getTipoGarrafa().getId());
 			params.add(lineaDePedido.getCantidad());
 			DataBase.Update("call InsertLineaDePedido(?, ?)", params);
+			params.clear();
+		}
+		
+		ArrayList<LineaDeVenta> lineasDeVenta = pedido.getLineasDeVenta();
+		for (LineaDeVenta lineaDeVenta : lineasDeVenta) {
+			params.add(lineaDeVenta.getTipoGarrafa().getId());	//ID del producto
+			params.add(lineaDeVenta.getCompra().getId());		//ID de la compra
+			params.add(lineaDeVenta.getCantidad());				//Cantidad de unidades que se tomaron de la compra
+			DataBase.Update("call InsertLineaDeVenta(?, ?, ?)", params);
 			params.clear();
 		}
 	}
@@ -134,5 +175,33 @@ public class PedidoDAO {
 			pedidos_pendiente.add(pedido);
 		}
 		return pedidos_pendiente;
+	}
+
+	public static ArrayList<Pedido> GetByDate(Date fechaDesde, Date fechaHasta) {
+		ArrayList<Pedido> listaPedidos = new ArrayList<Pedido>();
+		String consulta = "call SelectPedidosByDate(?, ?)";
+		
+		ArrayList<Object> params = new ArrayList<Object>();
+		params.add(fechaDesde);
+		params.add(fechaHasta);
+		
+		ArrayList<HashMap<String, Object>> results = DataBase.CallStoredProcedure(consulta, params);
+		
+		if (!results.isEmpty()) {
+			int index = 0;
+			do {
+				int nro_pedido = (int) results.get(index).get("nro_pedido");
+				int from = index;
+				boolean comparacion = true;
+				while (comparacion && (index < results.size())) {
+					comparacion = results.get(index).get("nro_pedido").equals(nro_pedido); //Comparamos el registro actual con el siguiente para saber si pertenecen al mismo proveedor
+					if (comparacion) index++;
+				}
+				Pedido pedido = Construir(results.subList(from, index));
+				listaPedidos.add(pedido);
+			} while (index < results.size());
+		}
+		
+		return listaPedidos;
 	}
 }
